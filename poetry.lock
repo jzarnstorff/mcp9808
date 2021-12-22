@@ -1,0 +1,23 @@
+[[package]]
+name = "smbus2"
+version = "0.4.1"
+description = "smbus2 is a drop-in replacement for smbus-cffi/smbus-python in pure Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+docs = ["sphinx (>=1.5.3)"]
+qa = ["flake8"]
+test = ["nose", "mock"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.9"
+content-hash = "eadc6ed019e253b4d406003e31f6a04197b6ed2de2233abd2f23085148550d56"
+
+[metadata.files]
+smbus2 = [
+    {file = "smbus2-0.4.1-py2.py3-none-any.whl", hash = "sha256:8b1e70cda011b6fb3caf8377a1084f73a5aa99392b78529f140b0a3f06468f6c"},
+    {file = "smbus2-0.4.1.tar.gz", hash = "sha256:6276eb599b76c4e74372f2582d2282f03b4398f0da16bc996608e4f21557ca9b"},
+]
