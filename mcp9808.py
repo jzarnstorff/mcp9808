@@ -5,6 +5,7 @@ from smbus2 import SMBus
 
 from i2cdevice import I2CDevice
 from register import (
+    BitWidth,
     ReadOnlyError,
     ReadOnlyRegister,
     ReadWriteRegister,
@@ -26,15 +27,15 @@ class MCP9808(I2CDevice):
     """
 
     def __post_init__(self) -> None:
-        self.reserved = ReadOnlyRegister(name="Reserved", address=0x00, width=16)
-        self.configuration = ReadWriteRegister(name="Configuration", address=0x01, width=16)
-        self.alert_upper = ReadWriteRegister(name="Alert Temperature Upper Boundary Trip", address=0x02, width=16)
-        self.alert_lower = ReadWriteRegister(name="Alert Temperature Lower Boundary Trip", address=0x03, width=16)
-        self.critical = ReadWriteRegister(name="Critical Temperature Trip", address=0x04, width=16)
-        self.temperature = ReadWriteRegister(name="Temperature", address=0x05, width=16)
-        self.manufacturing_id = ReadOnlyRegister(name="Manufacturing ID", address=0x06, width=16)
-        self.device_id_revision = ReadOnlyRegister(name="Device ID/Revision", address=0x07, width=16)
-        self.resolution = ReadWriteRegister(name="Resolution", address=0x08, width=8)
+        self.reserved = ReadOnlyRegister(name="Reserved", address=0x00, width=BitWidth.WORD)
+        self.configuration = ReadWriteRegister(name="Configuration", address=0x01, width=BitWidth.WORD)
+        self.alert_upper = ReadWriteRegister(name="Alert Temperature Upper Boundary Trip", address=0x02, width=BitWidth.WORD)
+        self.alert_lower = ReadWriteRegister(name="Alert Temperature Lower Boundary Trip", address=0x03, width=BitWidth.WORD)
+        self.critical = ReadWriteRegister(name="Critical Temperature Trip", address=0x04, width=BitWidth.WORD)
+        self.temperature = ReadWriteRegister(name="Temperature", address=0x05, width=BitWidth.WORD)
+        self.manufacturing_id = ReadOnlyRegister(name="Manufacturing ID", address=0x06, width=BitWidth.WORD)
+        self.device_id_revision = ReadOnlyRegister(name="Device ID/Revision", address=0x07, width=BitWidth.WORD)
+        self.resolution = ReadWriteRegister(name="Resolution", address=0x08, width=BitWidth.BYTE)
 
     @staticmethod
     def word_swap(word: int) -> Tuple[int, int]:
@@ -70,7 +71,7 @@ class MCP9808(I2CDevice):
                 f"Cannot read from {register.name} register with write only permissions"
             )
 
-        if register.width == 16:
+        if register.width == BitWidth.WORD:
             return self._read_word(register)
 
         return self._read_byte(register)
@@ -81,7 +82,7 @@ class MCP9808(I2CDevice):
                 f"Cannot write to {register.name} register with read only permissions"
             )
 
-        if register.width == 16:
+        if register.width == BitWidth.WORD:
             return self._write_word(register, data)
 
         return self._write_byte(register, data)

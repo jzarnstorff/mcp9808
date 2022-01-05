@@ -1,11 +1,17 @@
 from dataclasses import dataclass
+from enum import auto, enum
+
+
+class BitWidth(Enum):
+    BYTE = auto()
+    WORD = auto()
 
 
 @dataclass
 class Register:
     name: str
     address: int
-    width: int
+    width: BitWidth
 
 
 @dataclass
